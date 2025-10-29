@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { notesService } from "../../services/notes.service";
 import NoteItem from "../../components/noteItem";
 import { showFormattedDate } from "../../utils";
@@ -8,6 +8,7 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const activeNotes = notesService.getActive();
@@ -17,6 +18,21 @@ export default function HomePage() {
 
   const addNote = () => {
     navigate("/notes/new");
+  };
+
+  const handleSearch = (keyword) => {
+    setSearchParams({ keyword });
+
+    if (keyword === "") {
+      const activeNotes = notesService.getActive();
+      setNotes(activeNotes);
+      return;
+    }
+
+    const filteredNotes = notes.filter((note) =>
+      note.title.toLowerCase().includes(keyword.toLowerCase())
+    );
+    setNotes(filteredNotes);
   };
 
   if (loading) {
@@ -32,6 +48,9 @@ export default function HomePage() {
         <input
           type="text"
           placeholder="Cari catatan berdasarkan judul..."
+          name="keyword"
+          id="keyword"
+          onChange={(e) => handleSearch(e.target.value)}
         ></input>
       </section>
       <section className="notes-list">
