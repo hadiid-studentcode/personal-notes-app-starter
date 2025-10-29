@@ -22,8 +22,6 @@ export default function HomePage() {
     return <p>Memuat catatan...</p>;
   }
 
-  console.log(notes.length);
-
   return (
     <>
       <section className="homepage">
@@ -39,10 +37,11 @@ export default function HomePage() {
         {notes.length > 0 ? (
           notes.map((note) => (
             <NoteItem
-            id={note.id}
-            title={note.title}
-            createdAt={note.createdAt}
-            body={note.body}
+              key={note.id}
+              id={note.id}
+              title={note.title}
+              createdAt={note.createdAt}
+              body={note.body}
             />
           ))
         ) : (
