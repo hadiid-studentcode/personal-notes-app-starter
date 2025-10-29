@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { notesService } from "../../services/notes.service";
 import NoteItem from "../../components/noteItem";
+import { showFormattedDate } from "../../utils";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ export default function HomePage() {
               key={note.id}
               id={note.id}
               title={note.title}
-              createdAt={note.createdAt}
+              createdAt={showFormattedDate(note.createdAt)}
               body={note.body}
             />
           ))
