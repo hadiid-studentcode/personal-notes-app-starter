@@ -2,11 +2,13 @@ import { useState } from "react";
 import { notesService } from "../../../services/notes.service";
 import { ToastContainer, toast } from "react-toastify";
 import FormNote from "../../../components/formNote";
+import { useNavigate } from "react-router-dom";
 export default function NewNotePage() {
   const [formData, setFormData] = useState({
     title: "",
     body: "",
   });
+  const navigate = useNavigate();
 
   const handleFormChange = (e) => {
     setFormData({
@@ -20,12 +22,10 @@ export default function NewNotePage() {
     if (title && body) {
       notesService.add({ title, body });
       toast("Catatan berhasil disimpan");
-      setFormData({
-        title: "",
-        body: "",
-      });
-
-      const data = notesService.getActive();
+    
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     }
   };
 
@@ -33,7 +33,7 @@ export default function NewNotePage() {
     <>
       <ToastContainer
         position="top-center"
-        autoClose={5000}
+        autoClose={1000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick={false}

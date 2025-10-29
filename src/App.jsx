@@ -2,10 +2,9 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/home/page";
-import AboutPage from "./pages/about/page";
-import FaqPage from "./pages/faq/page";
 import NewNotePage from "./pages/notes/new/page";
 import NoteDetailPage from "./pages/notes/id/page";
+import ArchivesPage from "./pages/archives/page";
 
 function App() {
   return (
@@ -19,7 +18,7 @@ function App() {
           <div className="navigation">
             <ul>
               <li>
-                <Link to="/arsip">Arsip</Link>
+                <Link to="/archives">Arsip</Link>
               </li>
             </ul>
           </div>
@@ -30,8 +29,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/notes/new" element={<NewNotePage />} />
             <Route path="/notes/:id" element={<NoteDetailPage />} />
-            <Route path="/arsip" element={<AboutPage />} />
-            <Route path="/faq" element={<FaqPage />} />
+            <Route path="/archives" element={<ArchivesPage />} />
           </Routes>
         </main>
       </div>
