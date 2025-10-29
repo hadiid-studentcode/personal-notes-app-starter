@@ -1,22 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
 :root {
   --primary: #BB86FC;
   --primary-variant: #3700B3;
   --secondary: #03DAC6;
-  --background: #121212;
-  --surface: #121212;
   --error: #CF6679;
   --warning: #F39C12;
-  --on-background: #FFFFFF;
-  --on-background-grey: #c7c7c7;
-  --on-surface: #FFFFFF;
+
+  --background: #121212;
+  --surface: #1E1E1E;
+  --text-primary: #E0E0E0;
+  --text-secondary: #9E9E9E;
+  --border-color: rgba(255, 255, 255, 0.12);
 }
 
 [data-theme="light"] {
-  --background: #DDDDDD;
-  --suface: #FFFFFF;
-  --on-background: #333333;
-  --on-background-grey: #6d6d6d;
-  --on-surface: #333333;
+  --background: #F4F7F5;
+  --surface: #FFFFFF;
+  --text-primary: #212121;
+  --text-secondary: #616161;
+  --border-color: #E0E0E0;
+  
+  --primary: #3700B3;
+  --primary-variant: #BB86FC;
 }
 
 * {
@@ -26,19 +32,19 @@
 }
 
 a {
-  color: var(--on-background);
+  color: var(--primary);
+  text-decoration: none;
 }
-
 
 body {
   font-family: 'Inter', sans-serif;
+  background-color: var(--background);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .app-container {
-  color: var(--on-background);
-  background-color: var(--background);
   min-height: 100vh;
-  transition: all ease-in-out 0.5s;
 }
 
 header {
@@ -46,7 +52,8 @@ header {
   align-items: center;
   justify-content: center;
   padding: 16px;
-  border-bottom: 1px solid var(--on-background);
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--surface);
 }
 
 header h1 {
@@ -70,7 +77,7 @@ main {
   margin-top: 32px;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: 24px;
   padding: 16px 8px;
 }
 
@@ -81,21 +88,41 @@ main {
 
 .notes-list-empty p {
   text-align: center;
-  color: var(--on-background-grey);
+  color: var(--text-secondary);
 }
+
 .note-item {
+  background-color: var(--surface);
   padding: 16px;
   border-radius: 8px;
-  border: 1px solid var(--on-background);
-  border-top: 5px solid;
+  border: none;
+  border-top: 5px solid var(--primary);
+  
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.note-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .note-item__title {
   margin: 4px 0;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+.note-item__title a {
+  color: inherit;
+  text-decoration: none;
+}
+.note-item__title a:hover {
+  text-decoration: underline;
 }
 
 .note-item__createdAt {
-  color: var(--on-background-grey);
+  color: var(--text-secondary);
   font-size: 14px;
   margin: 4px 0;
 }
@@ -107,11 +134,12 @@ main {
   text-overflow: ellipsis;
   -webkit-line-clamp: 6;
   -webkit-box-orient: vertical;
+  color: var(--text-secondary);
 }
 
 .detail-page {
   margin: 0 auto;
-  margin-top: 32px; 
+  margin-top: 32px;
   width: 90%;
 }
 
@@ -122,7 +150,7 @@ main {
 }
 
 .detail-page__createdAt {
-  color: var(--on-background-grey)
+  color: var(--text-secondary);
 }
 
 .detail-page__body {
@@ -145,13 +173,21 @@ main {
   justify-content: center;
   font-size: 32px;
   border: 0;
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
-  background-color: var(--on-background);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  
+  background-color: var(--primary);
   color: var(--background);
   padding: 8px;
   cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.action:hover {
+  background-color: var(--primary-variant);
+  transform: scale(1.05);
 }
 
 .add-new-page__input {
@@ -162,56 +198,72 @@ main {
   width: 100%;
   background-color: transparent;
   border: 0;
-  color: var(--on-background);
+  color: var(--text-primary);
   font-family: 'Inter', sans-serif;
   font-size: 64px;
   font-weight: bold;
   padding: 8px 0;
+  outline: none;
 }
 
 .add-new-page__input__title::placeholder {
-  color: var(--on-background-grey);
+  color: var(--text-secondary);
 }
 
 .add-new-page__input .add-new-page__input__body {
   width: 100%;
   background-color: transparent;
   border: 0;
-  color: var(--on-background);
+  color: var(--text-primary);
   font-family: 'Inter', sans-serif;
   font-size: 24px;
   padding: 8px 0;
   min-height: 500px;
+  outline: none;
 }
 
 [data-placeholder]:empty::before {
   content: attr(data-placeholder);
-  color: var(--on-background-grey)
+  color: var(--text-secondary);
 }
 
 .search-bar input {
   margin: 16px 0;
   font-family: 'Inter', sans-serif;
   background-color: transparent;
-  border: 1px solid var(--on-background);
+  border: 1px solid var(--border-color);
   border-radius: 4px;
-  padding: 8px;
+  padding: 12px;
   width: 100%;
-  color: var(--on-background);
+  color: var(--text-primary);
+  font-size: 1rem;
 }
 
 .search-bar input::placeholder {
-  color: var(--on-background-grey);
+  color: var(--text-secondary);
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary-variant);
 }
 
 .toggle-theme, .toggle-locale {
   background-color: transparent;
   border: 0;
   cursor: pointer;
-  color: var(--on-background);
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   margin: 0 16px;
+  border-radius: 50%;
+  padding: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.toggle-theme:hover, .toggle-locale:hover {
+  background-color: var(--border-color);
 }
 
 .toggle-theme {
@@ -238,11 +290,16 @@ main {
   margin-bottom: 16px;
   display: block;
   width: 100%;
-  padding: 8px;
+  padding: 12px;
   background-color: transparent;
   border-radius: 8px;
-  border: 3px solid var(--on-background);
-  color: var(--on-background)
+  border: 2px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.input-login input:focus, .input-register input:focus {
+  outline: none;
+  border-color: var(--primary);
 }
 
 .input-login button, .input-register button {
@@ -253,9 +310,14 @@ main {
   padding: 12px;
   border: 0;
   border-radius: 8px;
-  background-color: var(--on-background);
+  background-color: var(--primary);
   color: var(--background);
   cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.input-login button:hover, .input-register button:hover {
+  background-color: var(--primary-variant);
 }
 
 .button-logout {
@@ -266,7 +328,7 @@ main {
   border: 0;
   font-size: 28px;
   cursor: pointer;
-  color: var(--on-background);
+  color: var(--text-primary);
 }
 
 @media screen and (min-width: 650px) {
@@ -274,7 +336,7 @@ main {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .detail-page__title { 
+  .detail-page__title {
     font-size: 64px;
   }
 }
