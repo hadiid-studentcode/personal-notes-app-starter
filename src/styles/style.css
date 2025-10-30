@@ -1,28 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
 :root {
-  --primary: #BB86FC;
-  --primary-variant: #3700B3;
-  --secondary: #03DAC6;
-  --error: #CF6679;
-  --warning: #F39C12;
-
+  --primary: #6f12e0;
+  --primary-variant: #3700b3;
+  --secondary: #03dac6;
   --background: #121212;
-  --surface: #1E1E1E;
-  --text-primary: #E0E0E0;
-  --text-secondary: #9E9E9E;
-  --border-color: rgba(255, 255, 255, 0.12);
+  --surface: #1e1e1e;
+  --error: #cf6679;
+  --warning: #f39c12;
+  --on-background: #ffffff;
+  --on-background-grey: #c7c7c7;
+  --on-surface: #ffffff;
 }
 
 [data-theme="light"] {
-  --background: #F4F7F5;
-  --surface: #FFFFFF;
-  --text-primary: #212121;
-  --text-secondary: #616161;
-  --border-color: #E0E0E0;
-  
-  --primary: #3700B3;
-  --primary-variant: #BB86FC;
+  --primary: #6200ea;
+  --primary-variant: #3700b3;
+  --secondary: #018786;
+  --background: #f5f5f5;
+  --surface: #ffffff;
+  --error: #b00020;
+  --warning: #f39c12;
+  --on-background: #333333;
+  --on-background-grey: #6d6d6d;
+  --on-surface: #333333;
 }
 
 * {
@@ -32,19 +33,26 @@
 }
 
 a {
+  color: var(--on-background);
+  /* DITAMBAHKAN: Transisi untuk perubahan warna link */
+  transition: color 0.2s ease-in-out;
+}
+
+/* DITAMBAHKAN: Efek hover untuk semua link */
+a:hover {
   color: var(--primary);
-  text-decoration: none;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--background);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: "Inter", sans-serif;
 }
 
 .app-container {
+  color: var(--on-background);
+  background-color: var(--background);
   min-height: 100vh;
+  /* DIPERBAIKI: Transisi lebih spesifik untuk performa lebih baik */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 header {
@@ -52,8 +60,7 @@ header {
   align-items: center;
   justify-content: center;
   padding: 16px;
-  border-bottom: 1px solid var(--border-color);
-  background-color: var(--surface);
+  border-bottom: 1px solid var(--on-background);
 }
 
 header h1 {
@@ -77,7 +84,7 @@ main {
   margin-top: 32px;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 16px;
   padding: 16px 8px;
 }
 
@@ -88,41 +95,32 @@ main {
 
 .notes-list-empty p {
   text-align: center;
-  color: var(--text-secondary);
+  color: var(--on-background-grey);
 }
-
 .note-item {
-  background-color: var(--surface);
   padding: 16px;
   border-radius: 8px;
-  border: none;
-  border-top: 5px solid var(--primary);
-  
+  border: 1px solid var(--on-background);
+  border-top: 5px solid var(--primary); /* Diperjelas warnanya */
+  background-color: var(--surface); /* Menambahkan background surface */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  /* DITAMBAHKAN: Transisi untuk efek 'lift' (mengangkat) */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* DITAMBAHKAN: Efek 'lift' saat hover di kartu catatan */
 .note-item:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .note-item__title {
   margin: 4px 0;
-  font-size: 1.25rem;
-  color: var(--text-primary);
-}
-
-.note-item__title a {
-  color: inherit;
-  text-decoration: none;
-}
-.note-item__title a:hover {
-  text-decoration: underline;
 }
 
 .note-item__createdAt {
-  color: var(--text-secondary);
+  color: var(--on-background-grey);
   font-size: 14px;
   margin: 4px 0;
 }
@@ -134,7 +132,6 @@ main {
   text-overflow: ellipsis;
   -webkit-line-clamp: 6;
   -webkit-box-orient: vertical;
-  color: var(--text-secondary);
 }
 
 .detail-page {
@@ -150,7 +147,7 @@ main {
 }
 
 .detail-page__createdAt {
-  color: var(--text-secondary);
+  color: var(--on-background-grey);
 }
 
 .detail-page__body {
@@ -159,7 +156,9 @@ main {
   font-size: 18px;
 }
 
-.detail-page__action, .homepage__action, .add-new-page__action {
+.detail-page__action,
+.homepage__action,
+.add-new-page__action {
   position: fixed;
   display: flex;
   gap: 16px;
@@ -173,21 +172,24 @@ main {
   justify-content: center;
   font-size: 32px;
   border: 0;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  
-  background-color: var(--primary);
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  background-color: var(--on-background);
   color: var(--background);
   padding: 8px;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  
+  /* DITAMBAHKAN: Transisi untuk tombol aksi */
+  transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 
+/* DITAMBAHKAN: Efek hover pada tombol aksi */
 .action:hover {
-  background-color: var(--primary-variant);
-  transform: scale(1.05);
+  transform: scale(1.1);
+  background-color: var(--primary);
+  color: var(--on-surface);
 }
 
 .add-new-page__input {
@@ -198,72 +200,82 @@ main {
   width: 100%;
   background-color: transparent;
   border: 0;
-  color: var(--text-primary);
-  font-family: 'Inter', sans-serif;
+  color: var(--on-background);
+  font-family: "Inter", sans-serif;
   font-size: 64px;
   font-weight: bold;
   padding: 8px 0;
-  outline: none;
+  outline: none; /* DITAMBAHKAN: Menghilangkan outline default */
 }
 
 .add-new-page__input__title::placeholder {
-  color: var(--text-secondary);
+  color: var(--on-background-grey);
 }
 
 .add-new-page__input .add-new-page__input__body {
   width: 100%;
   background-color: transparent;
   border: 0;
-  color: var(--text-primary);
-  font-family: 'Inter', sans-serif;
+  color: var(--on-background);
+  font-family: "Inter", sans-serif;
   font-size: 24px;
   padding: 8px 0;
   min-height: 500px;
-  outline: none;
+  outline: none; /* DITAMBAHKAN: Menghilangkan outline default */
 }
 
 [data-placeholder]:empty::before {
   content: attr(data-placeholder);
-  color: var(--text-secondary);
+  color: var(--on-background-grey);
 }
 
 .search-bar input {
   margin: 16px 0;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background-color: transparent;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--on-background);
   border-radius: 4px;
-  padding: 12px;
+  padding: 8px;
   width: 100%;
-  color: var(--text-primary);
-  font-size: 1rem;
+  color: var(--on-background);
+
+  /* DITAMBAHKAN: Transisi untuk border dan shadow */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .search-bar input::placeholder {
-  color: var(--text-secondary);
+  color: var(--on-background-grey);
 }
 
+/* DITAMBAHKAN: Efek focus pada search bar */
 .search-bar input:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 2px var(--primary-variant);
+  box-shadow: 0 0 5px var(--primary-variant);
 }
 
-.toggle-theme, .toggle-locale {
+.toggle-theme,
+.toggle-locale {
   background-color: transparent;
   border: 0;
   cursor: pointer;
-  color: var(--text-primary);
+  color: var(--on-background);
   display: flex;
   align-items: center;
   margin: 0 16px;
-  border-radius: 50%;
-  padding: 4px;
-  transition: background-color 0.2s ease;
+  padding: 4px; /* Menambahkan padding agar area klik lebih baik */
+  border-radius: 50%; /* Membuat hover lebih rapi */
+
+  /* DITAMBAHKAN: Transisi untuk tombol toggle */
+  transition: color 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
 }
 
-.toggle-theme:hover, .toggle-locale:hover {
-  background-color: var(--border-color);
+/* DITAMBAHKAN: Efek hover pada tombol toggle */
+.toggle-theme:hover,
+.toggle-locale:hover {
+  color: var(--primary);
+  transform: scale(1.1);
+  background-color: rgba(128, 128, 128, 0.1); /* Latar belakang hover halus */
 }
 
 .toggle-theme {
@@ -274,50 +286,72 @@ main {
   font-size: 28px;
 }
 
-.input-login, .input-register {
+.input-login,
+.input-register {
   margin: 32px 0;
 }
 
-.input-login label, .input-register label {
+.input-login label,
+.input-register label {
   font-size: 24px;
   font-weight: lighter;
 }
 
-.input-login input, .input-register input {
+.input-login input,
+.input-register input {
   font-size: 18px;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   margin-top: 8px;
   margin-bottom: 16px;
   display: block;
   width: 100%;
-  padding: 12px;
+  padding: 8px;
   background-color: transparent;
   border-radius: 8px;
-  border: 2px solid var(--border-color);
-  color: var(--text-primary);
+  border: 3px solid var(--on-background);
+  color: var(--on-background);
+
+  /* DITAMBAHKAN: Transisi untuk input field */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.input-login input:focus, .input-register input:focus {
+/* DITAMBAHKAN: Efek focus pada input login/register */
+.input-login input:focus,
+.input-register input:focus {
   outline: none;
   border-color: var(--primary);
+  box-shadow: 0 0 5px var(--primary-variant);
 }
 
-.input-login button, .input-register button {
-  font-family: 'Inter', sans-serif;
+
+.input-login button,
+.input-register button {
+  font-family: "Inter", sans-serif;
   font-weight: bold;
   font-size: 24px;
   width: 100%;
   padding: 12px;
   border: 0;
   border-radius: 8px;
-  background-color: var(--primary);
+  background-color: var(--on-background);
   color: var(--background);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+
+  /* DITAMBAHKAN: Transisi untuk tombol */
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
-.input-login button:hover, .input-register button:hover {
-  background-color: var(--primary-variant);
+/* DITAMBAHKAN: Efek hover pada tombol */
+.input-login button:hover,
+.input-register button:hover {
+  background-color: var(--primary);
+  color: var(--on-surface);
+}
+
+/* DITAMBAHKAN: Efek 'press' (tekan) pada tombol */
+.input-login button:active,
+.input-register button:active {
+  transform: scale(0.98);
 }
 
 .button-logout {
@@ -328,7 +362,16 @@ main {
   border: 0;
   font-size: 28px;
   cursor: pointer;
-  color: var(--text-primary);
+  color: var(--on-background);
+
+  /* DITAMBAHKAN: Transisi untuk tombol logout */
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+/* DITAMBAHKAN: Efek hover pada tombol logout */
+.button-logout:hover {
+  color: var(--error);
+  transform: scale(1.1);
 }
 
 @media screen and (min-width: 650px) {

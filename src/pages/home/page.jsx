@@ -38,10 +38,9 @@ export default function HomePage() {
   if (loading) {
     return <p>Memuat catatan...</p>;
   }
-
   return (
     <>
-      <section className="homepage">
+      <section className="hompage">
         <h2>Catatan Aktif</h2>
       </section>
       <section className="search-bar">
