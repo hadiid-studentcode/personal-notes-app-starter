@@ -1,5 +1,4 @@
-const BASE_URL = import.meta.env.VITE_BASE_URL;
-
+const BASE_URL = "https://notes-api.dicoding.dev/v1";
 
 function getAccessToken() {
   return localStorage.getItem("accessToken");
@@ -50,11 +49,14 @@ async function register({ name, email, password }) {
   const responseJson = await response.json();
 
   if (responseJson.status !== "success") {
-    alert(responseJson.message);
-    return { error: true };
+    return { error: true, data: null, message: responseJson.message };
   }
 
-  return { error: false };
+  return {
+    error: false,
+    data: responseJson.data,
+    message: responseJson.message,
+  };
 }
 
 async function getUserLogged() {
