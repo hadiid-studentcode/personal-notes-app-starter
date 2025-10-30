@@ -3,7 +3,7 @@ import { notesService } from "../../../services/notes.service";
 import { ToastContainer, toast } from "react-toastify";
 import FormNote from "../../../components/formNote";
 import { useNavigate } from "react-router-dom";
-export default function NewNotePage() {
+export default function NewNotePage({ theme }) {
   const [formData, setFormData] = useState({
     title: "",
     body: "",
@@ -22,7 +22,7 @@ export default function NewNotePage() {
     if (title && body) {
       notesService.add({ title, body });
       toast("Catatan berhasil disimpan");
-    
+
       setTimeout(() => {
         navigate("/");
       }, 1000);
@@ -41,7 +41,7 @@ export default function NewNotePage() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="dark"
+        theme={theme}
       />{" "}
       <section className="add-new-page">
         <FormNote

@@ -4,7 +4,7 @@ import { notesService } from "../../../services/notes.service";
 import { ToastContainer, toast } from "react-toastify";
 import { showFormattedDate } from "../../../utils";
 
-export default function NoteDetailPage() {
+export default function NoteDetailPage({ theme }) {
   const { id } = useParams();
   const [note, setNote] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -59,7 +59,7 @@ export default function NoteDetailPage() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="dark"
+        theme={theme}
       />{" "}
       <section className="detail-page">
         <h3 className="detail-page__title">{note.title}</h3>

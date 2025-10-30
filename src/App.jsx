@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/home/page";
 import NewNotePage from "./pages/notes/new/page";
@@ -9,9 +9,29 @@ import LoginPage from "./pages/auth/login/page";
 import RegisterPage from "./pages/auth/register/page";
 
 function App() {
+  // ...existing code...
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem("theme");
+    if (saved) return saved;
+    const prefersDark =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    return prefersDark ? "dark" : "light";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
+  // ...existing code...
+
   return (
     <>
-      <div className="app-container" data-theme="light">
+      <div className="app-container" data-theme={theme}>
         <header>
           <h1>
             {" "}
@@ -24,6 +44,17 @@ function App() {
               </li>
             </ul>
           </div>
+
+          {/* Toggle theme button */}
+          <button
+            className="toggle-theme"
+            type="button"
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+            title="Toggle theme"
+          >
+            {theme === "light" ? "🌞" : "🌙"}
+          </button>
         </header>
 
         <main>
@@ -31,8 +62,11 @@ function App() {
             <Route path="/" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/notes" element={<HomePage />} />
-            <Route path="/notes/new" element={<NewNotePage />} />
-            <Route path="/notes/:id" element={<NoteDetailPage />} />
+            <Route path="/notes/new" element={<NewNotePage theme={theme} />} />
+            <Route
+              path="/notes/:id"
+              element={<NoteDetailPage theme={theme} />}
+            />
             <Route path="/archives" element={<ArchivesPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
