@@ -1,6 +1,6 @@
 import { addNote, archiveNote, deleteNote, editNote, getActiveNotes, getAllNotes, getArchivedNotes, getNote, unarchiveNote } from "../utils/local-data";
 
-export const notesService = {
+export const notesServiceLocal = {
   getAll: getAllNotes,
   getActive: getActiveNotes,
   getArchived: getArchivedNotes,

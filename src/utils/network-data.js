@@ -30,7 +30,6 @@ async function login({ email, password }) {
   const responseJson = await response.json();
 
   if (responseJson.status !== "success") {
-   
     return { error: true, data: null, message: responseJson.message };
   }
 
@@ -86,10 +85,14 @@ async function addNote({ title, body }) {
   const responseJson = await response.json();
 
   if (responseJson.status !== "success") {
-    return { error: true, data: null };
+    return { error: true, data: null, message: responseJson.message };
   }
 
-  return { error: false, data: responseJson.data };
+  return {
+    error: false,
+    data: responseJson.data,
+    message: responseJson.message,
+  };
 }
 
 async function getActiveNotes() {
@@ -97,10 +100,14 @@ async function getActiveNotes() {
   const responseJson = await response.json();
 
   if (responseJson.status !== "success") {
-    return { error: true, data: null };
+    return { error: true, data: null, message: responseJson.message };
   }
 
-  return { error: false, data: responseJson.data };
+  return {
+    error: false,
+    data: responseJson.data,
+    message: responseJson.message,
+  };
 }
 
 async function getArchivedNotes() {
@@ -108,10 +115,14 @@ async function getArchivedNotes() {
   const responseJson = await response.json();
 
   if (responseJson.status !== "success") {
-    return { error: true, data: null };
+    return { error: true, data: null, message: responseJson.message };
   }
 
-  return { error: false, data: responseJson.data };
+  return {
+    error: false,
+    data: responseJson.data,
+    message: responseJson.message,
+  };
 }
 
 async function getNote(id) {
@@ -119,10 +130,14 @@ async function getNote(id) {
   const responseJson = await response.json();
 
   if (responseJson.status !== "success") {
-    return { error: true, data: null };
+    return { error: true, data: null, message: responseJson.message };
   }
 
-  return { error: false, data: responseJson.data };
+  return {
+    error: false,
+    data: responseJson.data,
+    message: responseJson.message,
+  };
 }
 
 async function archiveNote(id) {
@@ -133,10 +148,14 @@ async function archiveNote(id) {
   const responseJson = await response.json();
 
   if (responseJson.status !== "success") {
-    return { error: true, data: null };
+    return { error: true, data: null, message: responseJson.message };
   }
 
-  return { error: false, data: responseJson.data };
+  return {
+    error: false,
+    data: responseJson.data,
+    message: responseJson.message,
+  };
 }
 
 async function unarchiveNote(id) {
@@ -147,10 +166,14 @@ async function unarchiveNote(id) {
   const responseJson = await response.json();
 
   if (responseJson.status !== "success") {
-    return { error: true, data: null };
+    return { error: true, data: null, message: responseJson.message };
   }
 
-  return { error: false, data: responseJson.data };
+  return {
+    error: false,
+    data: responseJson.data,
+    message: responseJson.message,
+  };
 }
 
 async function deleteNote(id) {
@@ -161,10 +184,14 @@ async function deleteNote(id) {
   const responseJson = await response.json();
 
   if (responseJson.status !== "success") {
-    return { error: true, data: null };
+    return { error: true, data: null, message: responseJson.message };
   }
 
-  return { error: false, data: responseJson.data };
+  return {
+    error: false,
+    data: responseJson.data,
+    message: responseJson.message,
+  };
 }
 
 export {

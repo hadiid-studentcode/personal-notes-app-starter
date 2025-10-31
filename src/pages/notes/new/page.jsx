@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { notesService } from "../../../services/notes.service";
+import { notesService } from "../../../services/notesLocal.service";
 import { toast } from "react-toastify";
 import FormNote from "../../../components/formNote";
 import { useNavigate } from "react-router-dom";
