@@ -27,9 +27,10 @@ export default function HomePage() {
     setSearchParams({ keyword });
 
     if (keyword === "") {
-      const activeNotes = notesService.getActive();
-      setNotes(activeNotes);
-      return;
+      notesServiceNetwork.getActiveNotes().then((response) => {
+        setNotes(response.data);
+        return;
+      });
     }
 
     const filteredNotes = notes.filter((note) =>
