@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import RegistrasiInput from "../../../components/registrasiInput";
 import { useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { authService } from "../../../services/auth.service";
 export default function RegisterPage({ theme }) {
   const [state, setState] = useState({
@@ -43,24 +43,13 @@ export default function RegisterPage({ theme }) {
       }
     } catch (error) {
       console.log("error");
-      toast("Terjadi kesalahan");
+     
     }
   };
 
   return (
     <>
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme={theme}
-      />{" "}
+     
       <section className="regsiter-page">
         <h2>Isi form untuk mendaftar akun.</h2>
         <RegistrasiInput

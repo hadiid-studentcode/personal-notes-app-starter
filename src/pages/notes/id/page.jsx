@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { notesService } from "../../../services/notes.service";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { showFormattedDate } from "../../../utils";
 
 export default function NoteDetailPage({ theme }) {
@@ -22,7 +22,7 @@ export default function NoteDetailPage({ theme }) {
 
     setTimeout(() => {
       navigate("/");
-    }, 1000);
+    }, 3000);
   };
 
   const handleUnarchive = (id) => {
@@ -31,7 +31,7 @@ export default function NoteDetailPage({ theme }) {
 
     setTimeout(() => {
       navigate("/");
-    }, 1000);
+    }, 3000);
   };
 
   const handleDelete = (id) => {
@@ -40,7 +40,7 @@ export default function NoteDetailPage({ theme }) {
 
     setTimeout(() => {
       navigate("/");
-    }, 1000);
+    }, 3000);
   };
 
   if (loading) {
@@ -49,18 +49,7 @@ export default function NoteDetailPage({ theme }) {
 
   return (
     <>
-      <ToastContainer
-        position="top-center"
-        autoClose={1000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme={theme}
-      />{" "}
+     
       <section className="detail-page">
         <h3 className="detail-page__title">{note.title}</h3>
         <p className="detail-page__createdAt">

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { notesService } from "../../../services/notes.service";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import FormNote from "../../../components/formNote";
 import { useNavigate } from "react-router-dom";
 export default function NewNotePage({ theme }) {
@@ -25,24 +25,12 @@ export default function NewNotePage({ theme }) {
 
       setTimeout(() => {
         navigate("/");
-      }, 1000);
+      }, 3000);
     }
   };
 
   return (
     <>
-      <ToastContainer
-        position="top-center"
-        autoClose={1000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme={theme}
-      />{" "}
       <section className="add-new-page">
         <FormNote
           formData={formData}
