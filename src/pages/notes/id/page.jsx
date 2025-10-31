@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { notesService } from "../../../services/notes.service";
 import { toast } from "react-toastify";
 import { showFormattedDate } from "../../../utils";
+import { notesServiceNetwork } from "../../../services/notesNetwork.service";
 
 export default function NoteDetailPage({ theme }) {
   const { id } = useParams();
@@ -11,36 +11,46 @@ export default function NoteDetailPage({ theme }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const note = notesService.getById(id);
-    setNote(note);
-    setLoading(false);
+    notesServiceNetwork.getNoteById(id).then((response) => {
+      setNote(response.data);
+      setLoading(false);
+    });
   }, []);
 
   const handleArchive = (id) => {
-    notesService.archive(id);
-    toast("Catatan berhasil diarsipkan");
-
-    setTimeout(() => {
-      navigate("/");
-    }, 3000);
+    notesServiceNetwork.archiveNote(id).then((response) => {
+      if (response.status === "error") {
+        toast.error(response.message);
+      }
+      toast.success(response.message);
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    });
   };
 
   const handleUnarchive = (id) => {
-    notesService.unarchive(id);
-    toast("Catatan berhasil diaktifkan");
-
-    setTimeout(() => {
-      navigate("/");
-    }, 3000);
+    notesServiceNetwork.unarchiveNote(id).then((response) => {
+      if (response.status === "error") {
+        toast.error(response.message);
+      }
+      toast.success(response.message);
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    });
   };
 
   const handleDelete = (id) => {
-    notesService.delete(id);
-    toast("Catatan berhasil dihapus");
-
-    setTimeout(() => {
-      navigate("/");
-    }, 3000);
+    notesServiceNetwork.deleteNote(id).then((response) => {
+      if (response.status === "error") {
+        toast.error(response.message);
+      }
+      toast.success(response.message);
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    });
   };
 
   if (loading) {
@@ -49,7 +59,6 @@ export default function NoteDetailPage({ theme }) {
 
   return (
     <>
-     
       <section className="detail-page">
         <h3 className="detail-page__title">{note.title}</h3>
         <p className="detail-page__createdAt">

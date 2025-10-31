@@ -1,25 +1,27 @@
-import { useEffect, useState, useMemo } from "react"; // 1. Impor useMemo
-import { notesService } from "../../services/notes.service";
+import { useEffect, useState, useMemo, useContext } from "react"; // 1. Impor useMemo
 import { showFormattedDate } from "../../utils";
 import NoteItem from "../../components/noteItem";
 import { useSearchParams } from "react-router-dom";
+import { notesServiceNetwork } from "../../services/notesNetwork.service";
+import LocaleContext from "../../contexts/localeContext";
 
 export default function ArchivesPage() {
   // 2. State ini untuk menyimpan SEMUA catatan arsip, jangan diubah
   const [allArchivedNotes, setAllArchivedNotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
+  const { selectLanguage } = useContext(LocaleContext);
 
   const initialKeyword = searchParams.get("keyword") || "";
   const [keyword, setKeyword] = useState(initialKeyword);
 
   useEffect(() => {
-    const archiveNotes = notesService.getArchived();
-    setAllArchivedNotes(archiveNotes);
-    setLoading(false);
-  }, []); 
+    notesServiceNetwork.getArchivedNotes().then((response) => {
+      setAllArchivedNotes(response.data);
+      setLoading(false);
+    });
+  }, []);
 
- 
   const filteredNotes = useMemo(() => {
     return allArchivedNotes.filter((note) =>
       note.title.toLowerCase().includes(keyword.toLowerCase())
@@ -27,12 +29,16 @@ export default function ArchivesPage() {
   }, [allArchivedNotes, keyword]);
 
   const handleSearch = (newKeyword) => {
-    setKeyword(newKeyword); 
+    setKeyword(newKeyword);
     setSearchParams({ keyword: newKeyword });
   };
 
   if (loading) {
-    return <p>Memuat Catatan...</p>;
+    return (
+      <p>
+        {selectLanguage({ id: "Memuat Catatan...", en: "Loading notes..." })}
+      </p>
+    );
   }
 
   return (
@@ -42,7 +48,10 @@ export default function ArchivesPage() {
         <section className="search-bar">
           <input
             type="text"
-            placeholder="Cari berdasarkan judul ..."
+            placeholder={selectLanguage({
+              id: "Cari berdasarkan judul ...",
+              en: "Search by title ...",
+            })}
             name="keyword"
             id="keyword"
             value={keyword}
@@ -61,7 +70,12 @@ export default function ArchivesPage() {
               />
             ))
           ) : (
-            <p>Tidak ada catatan arsip ...</p>
+            <p>
+              {selectLanguage({
+                id: "Tidak ada catatan arsip ...",
+                en: "No archived notes ...",
+              })}
+            </p>
           )}
         </section>
       </section>

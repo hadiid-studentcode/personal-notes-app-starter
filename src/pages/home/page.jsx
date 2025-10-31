@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { notesService } from "../../services/notes.service";
 import NoteItem from "../../components/noteItem";
 import { showFormattedDate } from "../../utils";
 import LocaleContext from "../../contexts/localeContext";
+import { notesServiceNetwork } from "../../services/notesNetwork.service";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -13,9 +13,10 @@ export default function HomePage() {
   const { selectLanguage } = useContext(LocaleContext);
 
   useEffect(() => {
-    const activeNotes = notesService.getActive();
-    setNotes(activeNotes);
-    setLoading(false);
+    notesServiceNetwork.getActiveNotes().then((response) => {
+      setNotes(response.data);
+      setLoading(false);
+    });
   }, []);
 
   const addNote = () => {
@@ -38,7 +39,9 @@ export default function HomePage() {
   };
 
   if (loading) {
-    return <p>{selectLanguage({ id: "Memuat Catatan...", en: "Loading..." })}</p>;
+    return (
+      <p>{selectLanguage({ id: "Memuat Catatan...", en: "Loading..." })}</p>
+    );
   }
   return (
     <>

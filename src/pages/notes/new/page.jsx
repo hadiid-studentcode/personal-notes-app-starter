@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { notesService } from "../../../services/notesLocal.service";
 import { toast } from "react-toastify";
 import FormNote from "../../../components/formNote";
 import { useNavigate } from "react-router-dom";
+import { notesServiceNetwork } from "../../../services/notesNetwork.service";
 export default function NewNotePage({ theme }) {
   const [formData, setFormData] = useState({
     title: "",
@@ -20,7 +20,7 @@ export default function NewNotePage({ theme }) {
     e.preventDefault();
     const { title, body } = formData;
     if (title && body) {
-      notesService.add({ title, body });
+      notesServiceNetwork.addNote({ title, body });
       toast("Catatan berhasil disimpan");
 
       setTimeout(() => {

@@ -42,7 +42,7 @@ export const notesServiceNetwork = {
       return { status: "error", message: error.message, data: null };
     }
   },
-  getNote: async (id) => {
+  getNoteById: async (id) => {
     try {
       const response = await getNote(id);
       return response.error === false
