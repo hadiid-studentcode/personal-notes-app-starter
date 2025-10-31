@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import NoteItem from "../../components/noteItem";
 import { showFormattedDate } from "../../utils";
@@ -11,6 +11,9 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const { selectLanguage } = useContext(LocaleContext);
+  const initialKeyword = searchParams.get("keyword") || "";
+
+  const [keyword, setKeyword] = useState(initialKeyword);
 
   useEffect(() => {
     notesServiceNetwork.getActiveNotes().then((response) => {
@@ -23,20 +26,15 @@ export default function HomePage() {
     navigate("/notes/new");
   };
 
-  const handleSearch = (keyword) => {
-    setSearchParams({ keyword });
-
-    if (keyword === "") {
-      notesServiceNetwork.getActiveNotes().then((response) => {
-        setNotes(response.data);
-        return;
-      });
-    }
-
-    const filteredNotes = notes.filter((note) =>
+  const filteredNotes = useMemo(() => {
+    return notes.filter((note) =>
       note.title.toLowerCase().includes(keyword.toLowerCase())
     );
-    setNotes(filteredNotes);
+  }, [notes, keyword]);
+
+  const handleSearch = (newKeyword) => {
+    setKeyword(newKeyword);
+    setSearchParams({ keyword: newKeyword });
   };
 
   if (loading) {
@@ -67,8 +65,8 @@ export default function HomePage() {
         ></input>
       </section>
       <section className="notes-list">
-        {notes.length > 0 ? (
-          notes.map((note) => (
+        {filteredNotes.length > 0 ? (
+          filteredNotes.map((note) => (
             <NoteItem
               key={note.id}
               id={note.id}
