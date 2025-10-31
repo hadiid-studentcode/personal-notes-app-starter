@@ -1,8 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import RegistrasiInput from "../../../components/registrasiInput";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { authService } from "../../../services/auth.service";
+import LocaleContext from "../../../contexts/localeContext";
 export default function RegisterPage({ theme }) {
   const [state, setState] = useState({
     name: "",
@@ -11,6 +12,7 @@ export default function RegisterPage({ theme }) {
     confirmPassword: "",
   });
   const navigate = useNavigate();
+  const { selectLanguage } = useContext(LocaleContext);
 
   const handleFormChange = (e) => {
     setState({
@@ -43,22 +45,35 @@ export default function RegisterPage({ theme }) {
       }
     } catch (error) {
       console.log("error");
-     
     }
   };
 
   return (
     <>
-     
       <section className="regsiter-page">
-        <h2>Isi form untuk mendaftar akun.</h2>
+        <h2>
+          {selectLanguage({
+            id: "Isi form untuk mendaftar akun.",
+            en: "Fill out the form to register an account.",
+          })}
+        </h2>
         <RegistrasiInput
           handleRegister={handleRegister}
           state={state}
           handleFormChange={handleFormChange}
+          selectLanguage={selectLanguage}
         />
         <p>
-          Sudah punya akun? <Link to="/">Login di sini</Link>
+          {selectLanguage({
+            id: "Sudah punya akun?",
+            en: "Already have an account?",
+          })}
+          <Link to="/">
+            {selectLanguage({
+              id: " Login di sini",
+              en: " Login here",
+            })}
+          </Link>
         </p>
       </section>
     </>

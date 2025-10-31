@@ -22,7 +22,7 @@ export default function Navigation({ logout, name }) {
           <ul>
             <li>
               <Link to="/archives">
-                {selectLanguage({ id: "Arsip", en: "Archived" })}
+                {selectLanguage({ id: "Terarsip", en: "Archived" })}
               </Link>
             </li>
           </ul>

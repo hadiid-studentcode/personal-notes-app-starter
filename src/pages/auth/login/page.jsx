@@ -1,14 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
 import LoginInput from "../../../components/loginInput";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { authService } from "../../../services/auth.service";
 import { toast } from "react-toastify";
+import LocaleContext from "../../../contexts/localeContext";
 
 export default function LoginPage({ loginSuccess }) {
   const [state, setState] = useState({
     email: "",
     password: "",
   });
+  const { selectLanguage } = useContext(LocaleContext);
 
   const handleFormChange = (e) => {
     setState({
@@ -37,12 +39,27 @@ export default function LoginPage({ loginSuccess }) {
   return (
     <>
       <section className="login-page">
-        <h2>Yuk, login untuk menggunakan aplikasi.</h2>
+        <h2>
+          {selectLanguage({
+            id: "Yuk, login untuk menggunakan aplikasi.",
+            en: "Login to use app, please.",
+          })}
+        </h2>
         <LoginInput
           handleLogin={handleLogin}
           state={state}
           handleFormChange={handleFormChange}
+          selectLanguage={selectLanguage}
         />
+        <p>
+          {selectLanguage({
+            id: "Belum punya akun?",
+            en: "Don't have an account?",
+          })}{" "}
+          <Link to="/register">
+            {selectLanguage({ id: "Daftar di sini", en: "Register here" })}
+          </Link>
+        </p>
       </section>
     </>
   );

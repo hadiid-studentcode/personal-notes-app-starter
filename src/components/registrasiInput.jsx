@@ -2,11 +2,17 @@ export default function RegistrasiInput({
   handleRegister,
   state,
   handleFormChange,
+  selectLanguage,
 }) {
   return (
     <>
       <form onSubmit={handleRegister} className="input-register">
-        <label htmlFor="name">Name</label>
+        <label htmlFor="name">
+          {selectLanguage({
+            id: "Nama",
+            en: "Name",
+          })}
+        </label>
         <input type="text" id="name" name="name" onChange={handleFormChange} />
         <label htmlFor="email">Email</label>
         <input
@@ -16,7 +22,12 @@ export default function RegistrasiInput({
           value={state.email}
           onChange={handleFormChange}
         />
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">
+          {selectLanguage({
+            id: "Kata Sandi",
+            en: "Password",
+          })}
+        </label>
         <input
           type="password"
           id="password"
@@ -24,7 +35,12 @@ export default function RegistrasiInput({
           value={state.password}
           onChange={handleFormChange}
         />
-        <label htmlFor="confirmPassword">Confirm Password</label>
+        <label htmlFor="confirmPassword">
+          {selectLanguage({
+            id: "Konfirmasi Kata Sandi",
+            en: "Confirm Password",
+          })}
+        </label>
         <input
           type="password"
           id="confirmPassword"
@@ -32,7 +48,12 @@ export default function RegistrasiInput({
           onChange={handleFormChange}
           value={state.confirmPassword}
         />
-        <button type="submit">Register</button>
+        <button type="submit">
+          {selectLanguage({
+            id: "Daftar",
+            en: "Register",
+          })}
+        </button>
       </form>
     </>
   );

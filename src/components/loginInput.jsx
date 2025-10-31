@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 
-export default function LoginInput({ handleLogin, state, handleFormChange }) {
+export default function LoginInput({
+  handleLogin,
+  state,
+  handleFormChange,
+  selectLanguage,
+}) {
   return (
     <>
       <form onSubmit={handleLogin} className="input-login">
@@ -12,7 +17,9 @@ export default function LoginInput({ handleLogin, state, handleFormChange }) {
           onChange={handleFormChange}
           value={state.email}
         />
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">
+          {selectLanguage({ id: "Kata sandi", en: "Password" })}
+        </label>
         <input
           type="password"
           id="password"
@@ -20,11 +27,8 @@ export default function LoginInput({ handleLogin, state, handleFormChange }) {
           onChange={handleFormChange}
           value={state.password}
         />
-        <button type="submit">Login</button>
+        <button type="submit">{selectLanguage({ id: "Masuk", en: "Login" })}</button>
       </form>
-      <p>
-        Belum punya akun? <Link to="/register">Daftar di sini</Link>
-      </p>
     </>
   );
 }

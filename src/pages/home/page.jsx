@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { notesService } from "../../services/notes.service";
 import NoteItem from "../../components/noteItem";
 import { showFormattedDate } from "../../utils";
+import LocaleContext from "../../contexts/localeContext";
 
 export default function HomePage() {
   const navigate = useNavigate();
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
+  const { selectLanguage } = useContext(LocaleContext);
 
   useEffect(() => {
     const activeNotes = notesService.getActive();
@@ -36,17 +38,25 @@ export default function HomePage() {
   };
 
   if (loading) {
-    return <p>Memuat catatan...</p>;
+    return <p>{selectLanguage({ id: "Memuat Catatan...", en: "Loading..." })}</p>;
   }
   return (
     <>
       <section className="hompage">
-        <h2>Catatan Aktif</h2>
+        <h2>
+          {selectLanguage({
+            id: "Catatan Aktif",
+            en: "Active Notes",
+          })}
+        </h2>
       </section>
       <section className="search-bar">
         <input
           type="text"
-          placeholder="Cari catatan berdasarkan judul..."
+          placeholder={selectLanguage({
+            id: "Cari catatan berdasarkan judul...",
+            en: "Search notes by title...",
+          })}
           name="keyword"
           id="keyword"
           onChange={(e) => handleSearch(e.target.value)}
@@ -64,7 +74,9 @@ export default function HomePage() {
             />
           ))
         ) : (
-          <p>Tidak ada catatan ...</p>
+          <p>
+            {selectLanguage({ id: "Tidak ada catatan ...", en: "No notes" })}
+          </p>
         )}
       </section>
       <div className="homepage__action">
